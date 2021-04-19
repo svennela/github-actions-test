@@ -15,5 +15,7 @@ jobs:
       - name: python comm
         run: |
           import platform
+          import os
+          print(os.environ['PATH'])
           print(platform.processor())
         shell: python    
