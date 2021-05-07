@@ -6,16 +6,21 @@ jobs:
   run-shell-command:
     runs-on: ubuntu-latest
     steps:
-      - name: download carvel imgpkg 
+      - name: download carvel imgpkg and docker
         run: |
           wget https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v0.7.0/imgpkg-linux-amd64
           sudo chmod +x imgpkg-linux-amd64
           sudo mv imgpkg-linux-amd64 /usr/bin/imgpkg
+          docker_url=https://download.docker.com/linux/static/stable/x86_64
+          docker_version=20.10.6
+          wget $docker_url/docker-$docker_version.tgz
+          sudo tar zxvf docker-20.10.6.tgz --strip 1 -C /usr/bin docker/docker
       - name: copy source image to local tar
         run: | 
-          imgpkg copy -b docker.io/library/nginx:1.20-alpine --to-tar=nginx-1.20-alpine.tar
+          imgpkg copy -i docker.io/library/nginx:1.20-alpine --to-tar=nginx-1.20-alpine.tar
       - name: copy tar to destination registry
         run: |
+          # docker login 
           imgpkg copy --tar nginx-1.20-alpine.tar --to-repo harbor.contour.e2e.corby.cc/test-repo/nginx
                  
 
