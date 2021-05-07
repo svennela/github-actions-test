@@ -9,5 +9,6 @@ jobs:
       - name: download carvel imgpkg 
         run: |
           wget https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v0.7.0/imgpkg-linux-amd64
-          mv imgpkg-linux-amd64 /usr/bin/imgpkg
+          sudo mv imgpkg-linux-amd64 /usr/bin/imgpkg
+          
   
