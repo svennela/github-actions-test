@@ -10,5 +10,12 @@ jobs:
         run: |
           wget https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v0.7.0/imgpkg-linux-amd64
           sudo mv imgpkg-linux-amd64 /usr/bin/imgpkg
-          
+      - name: copy source image to local tar
+        run: | 
+          imgpkg copy -b docker.io/library/nginx:1.20-alpine --to-tar=nginx-1.20-alpine.tar
+      - name: copy tar to destination registry
+        run: |
+          imgpkg copy --tar nginx-1.20-alpine.tar --to-repo harbor.contour.e2e.corby.cc/test-repo/nginx
+                 
+
   
