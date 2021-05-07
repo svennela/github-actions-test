@@ -1,0 +1,21 @@
+name: shell commands
+
+on: [push, pull_request]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: echo "Hello github actions"
+      - name: multiline script
+        run: |
+          node -v
+          npm -v
+      - name: python comm
+        run: |
+          import platform
+          import os
+          print(os.environ['PATH'])
+          print(platform.processor())
+        shell: python    
